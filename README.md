@@ -11,8 +11,9 @@ As a user, I want the ability to...
   - read details of individual movies.
       - poster
       - title
-      - release year
       - cast
+      - release year
+      - genre
       - synopsis
   - add new movie to watchlist (if movie does not exist in database)
   - create my own movie watchlists. 
@@ -27,7 +28,9 @@ As a user, I want the ability to...
 
 ## Wireframes
 
-## ERD
+## Entity Relationship Diagram
+<img width="952" alt="Screen Shot 2023-12-20 at 10 02 25 PM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/73a85256-869c-409d-a625-9c3115324f49">
+
 
 
 ## Technologies Used
