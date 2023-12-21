@@ -35,7 +35,7 @@ As a user, I want the ability to...
 ## Wireframes
 https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wireframe-Watchlist-App?type=whiteboard&node-id=0%3A1&t=PUJGbaAAWorwehJv-1
 
-<img width="635" alt="Screen Shot 2023-12-21 at 9 52 51 AM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/9a772649-02ee-4bb3-85e2-4346c4e2f270">
+<img width="953" alt="Screen Shot 2023-12-21 at 9 59 19 AM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/782d69ff-9527-4b31-be67-cef2f6564529">
 
 
 
