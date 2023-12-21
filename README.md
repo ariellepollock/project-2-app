@@ -27,9 +27,6 @@ As a user, I want the ability to...
   - favorite a watchlist
   - unfavorite a watchlist
   - view favorited lists
-  - view top favorited lists
-  - share lists to other users (outside of app)
-  - share lists to non-users with link to sign up for app
 
 
 
@@ -60,6 +57,9 @@ As a user, I want the ability to...
   - view shared watchlists
   - update shared watchlists
   - delete shared watchlists
+  - view top favorited lists
+  - share lists to other users (outside of app)
+  - share lists to non-users with link to sign up for app
   - what should I(we) watch feature:
       - select a watchlist (personal or shared)
       - generate a randomized movie choice
