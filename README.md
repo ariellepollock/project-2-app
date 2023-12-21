@@ -6,7 +6,7 @@ This app will help you maintain a collection of movie watchlists. Perhaps you li
 
 
 ## Entity Relationship Diagram
-<img width="954" alt="Screen Shot 2023-12-21 at 1 34 10 PM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/6d8dd32b-56be-49b9-ad7e-44f1e5ce8d59">
+<img width="936" alt="Screen Shot 2023-12-21 at 2 23 06 PM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/fe434401-a7e4-4835-bab2-d844e4047d79">
 
 
 
