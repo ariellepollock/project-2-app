@@ -4,6 +4,7 @@
 This app will help you maintain a collection of movie watchlists. Perhaps you like to create lists of movies for specific occassions/holidays, or maybe you just need an easy place to keep track of movies you MUST see. View lists other users have currated and show them some love with a heart, while also saving that list into your favorites.
 
 
+
 ## User Stories
 As a user, I want the ability to... 
   - sign up.
@@ -30,13 +31,17 @@ As a user, I want the ability to...
   - share lists to non-users with link to sign up for app
 
 
+
 ## Wireframes
-<img width="1165" alt="Screen Shot 2023-12-21 at 1 43 16 AM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/65ba4076-cb24-4008-b4bf-39dafda19136">
+https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wireframe-Watchlist-App?type=whiteboard&node-id=0%3A1&t=PUJGbaAAWorwehJv-1
+
+<img width="635" alt="Screen Shot 2023-12-21 at 9 52 51 AM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/9a772649-02ee-4bb3-85e2-4346c4e2f270">
 
 
 
 ## Entity Relationship Diagram
-<img width="952" alt="Screen Shot 2023-12-20 at 10 02 25 PM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/73a85256-869c-409d-a625-9c3115324f49">
+<img width="944" alt="Screen Shot 2023-12-21 at 9 57 06 AM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/facf1ba7-412f-47f1-af43-7bf04c0cfae9">
+
 
 
 ## Technologies Used
@@ -44,6 +49,7 @@ As a user, I want the ability to...
 - Node.js
 - Express
 - CSS
+
 
 
 ## Ice Box
