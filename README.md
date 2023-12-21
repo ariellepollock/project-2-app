@@ -5,6 +5,11 @@ This app will help you maintain a collection of movie watchlists. Perhaps you li
 
 
 
+## Entity Relationship Diagram
+<img width="954" alt="Screen Shot 2023-12-21 at 1 34 10 PM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/6d8dd32b-56be-49b9-ad7e-44f1e5ce8d59">
+
+
+
 ## User Stories
 As a user, I want the ability to... 
   - sign up.
@@ -18,15 +23,18 @@ As a user, I want the ability to...
       - genre
       - cast
       - synopsis
-  - add new movie to watchlist (if movie does not exist in database)
-  - create my own movie watchlists. 
-  - update my movie watchlists. 
-  - view all of my watchlists in a list.  
-  - delete my watchlists. 
-  - view watchlists others have created.
-  - favorite a watchlist
-  - unfavorite a watchlist
-  - view favorited lists
+  - scroll through movies
+  - search with select keywords for movies
+  - add movie to watchlist
+  - create new movie
+  - add new movie to watchlist
+  - delete movie from watchlist
+  - create my watchlists
+  - update my watchlists
+  - view all of my watchlists in a list
+  - delete a watchlist
+  - favorite a movie
+  - view list of favorite movies
 
 
 
@@ -37,14 +45,9 @@ Link to FigJam board: https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wirefram
 
 
 
-## Entity Relationship Diagram
-<img width="954" alt="Screen Shot 2023-12-21 at 1 34 10 PM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/6d8dd32b-56be-49b9-ad7e-44f1e5ce8d59">
-
-
-
-
 ## Technologies Used
 - MongoDB
+- Mongoose
 - Node.js
 - Express
 - CSS
@@ -58,13 +61,15 @@ As a user, I want the ability to...
   - view shared watchlists
   - update shared watchlists
   - delete shared watchlists
-  - view top favorited lists
+  - community share watchlist
+  - view community shared watchlists (collection of lists visible to any user on the app)
+  - favorite a watchlist
+  - unfavorite a watchlist
+  - view favorited lists
+  - view top community wide favorited lists
   - share lists to other users (outside of app)
   - share lists to non-users with link to sign up for app
   - what should I(we) watch feature:
       - select a watchlist (personal or shared)
       - generate a randomized movie choice
       - view radomized movie choice
-
-
-### License
