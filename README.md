@@ -1,7 +1,7 @@
 # Put It On The List
 
 ## Overview
-This app will help you maintain a collection of movie watchlists. Perhaps you like to create lists of movies for specific occassions/holidays, or maybe you just need an easy place to keep track of movies you MUST see and don't want to forget about. Sometimes you just like making lists. Keep track of movies you loved by liking them.
+This app will help you maintain a collection of movie watchlists. Perhaps you like to create lists of movies for specific occassions/holidays, or maybe you just need an easy place to keep track of movies you MUST see and don't want to forget about. Sometimes you just like making lists. Oh and also, keep track of movies you loved by hearting them.
 
 
 
