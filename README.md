@@ -13,9 +13,10 @@ As a user, I want the ability to...
   - read details of individual movies.
       - poster
       - title
-      - cast
+      - director
       - release year
       - genre
+      - cast
       - synopsis
   - add new movie to watchlist (if movie does not exist in database)
   - create my own movie watchlists. 
