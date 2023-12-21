@@ -55,6 +55,7 @@ Link to FigJam board: https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wirefram
 
 
 ## Ice Box
+PART I
 As a user, I want the ability to...
   - add a user to watchlist
   - assign a color to user contributions in watchlist
@@ -72,4 +73,11 @@ As a user, I want the ability to...
   - what should I(we) watch feature:
       - select a watchlist (personal or shared)
       - generate a randomized movie choice
-      - view radomized movie choice
+      - view randomized movie choice
+   
+PART II
+As a user, I want the ability to...
+  - categorize/organize my lists
+  - view additional categories such as restaurants and events
+  - create a cross-category list
+  - receive a randomized activity choice (decide for me feature)
