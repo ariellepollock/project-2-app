@@ -31,14 +31,15 @@ As a user, I want the ability to...
 
 
 ## Wireframes
-https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wireframe-Watchlist-App?type=whiteboard&node-id=0%3A1&t=PUJGbaAAWorwehJv-1
+Link to FigJam board: https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wireframe-Watchlist-App?type=whiteboard&node-id=0%3A1&t=PUJGbaAAWorwehJv-1
 
 <img width="951" alt="Screen Shot 2023-12-21 at 10 16 39 AM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/8fb58a40-a91b-49a1-b69b-2e3e9414818b">
 
 
 
 ## Entity Relationship Diagram
-<img width="944" alt="Screen Shot 2023-12-21 at 9 57 06 AM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/facf1ba7-412f-47f1-af43-7bf04c0cfae9">
+<img width="954" alt="Screen Shot 2023-12-21 at 1 34 10 PM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/6d8dd32b-56be-49b9-ad7e-44f1e5ce8d59">
+
 
 
 
