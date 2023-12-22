@@ -47,10 +47,10 @@ Link to FigJam board: https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wirefram
 
 ## Technologies Used
 - MongoDB
-- Mongoose
 - Node.js
 - Express
-- CSS
+- JavaScript
+- CSS3
 
 
 
