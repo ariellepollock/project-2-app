@@ -14,6 +14,7 @@ const methodOverride = require('method-override')
 //+//+//+//+//+//+//+//+//+//+//+//
 const middleware = (app) => {
     app.use(methodOverride('_method'))
+    app.use(express.urlencoded({ extended: true }))
     app.use(morgan('tiny'))
     app.use(express.static('public'))
     app.use(express.json())
@@ -21,7 +22,7 @@ const middleware = (app) => {
         session({
             secret: process.env.SECRET,
             store: MongoStore.create({
-                mongoURL: process.env.DATABASE_URL
+                mongoUrl: process.env.DATABASE_URL
             }),
             saveUninitialized: true,
             resave: false
