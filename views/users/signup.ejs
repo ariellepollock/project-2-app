@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+
+    <div class="container-sm">
+        <form action="/users/signup" method="POST">
+            <fieldset>
+                <legend>Welcome, create an account</legend>
+                <label class="form-label">Username:</label>
+                <input type="text" class="form-control" name="username" placeholder="username" required>
+                <label class="form-label">Password:</label>
+                <input type="password" class="form-control" name="password" placeholder="password" required>
+            </fieldset>
+            <input type="submit" class="btn btn-success mt-3" value="Create Account">
+        </form>
+    </div>
+
+<%- include('../partials/footer') %>

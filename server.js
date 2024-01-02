@@ -9,7 +9,7 @@ const middleware = require('./utils/middleware')
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Import Routers         //+//
 //+//+//+//+//+//+//+//+//+//+//+//
-
+const UserRouter = require('./controllers/userControllers')
 
 //+//+//+//+//+//+//+//+//+//+//+//+//+//+//+//+//
 //+//  Create the app object + view engine   //+//
@@ -31,6 +31,8 @@ app.get('/', (req, res) => {
     const { username, signedIn, userId } = req.session
     res.render('home.ejs', { username, signedIn, userId })
 })
+
+app.use('/users', UserRouter)
 
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Server Listener        //+//
