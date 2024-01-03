@@ -16,6 +16,7 @@ const UserRouter = require('./controllers/userControllers')
 //+//+//+//+//+//+//+//+//+//+//+//+//+//+//+//+//
 const app = express()
 
+// view engine
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
@@ -36,7 +37,7 @@ app.use('/users', UserRouter)
 
 // error page
 app.get('/error', (req, res) => {
-    const error = req.query.error || 'This page does not exist'
+    const error = req.query.error || 'Something went wrong...try again'
     
     const { username, signedIn, userId } = req.session
     res.render('error.ejs', { error, userId, username, signedIn })

@@ -13,6 +13,7 @@ const router = express.Router()
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Routes + Controllers   //+//
 //+//+//+//+//+//+//+//+//+//+//+//
+
 // GET -> SignUp /users/signup
 router.get('/signup', (req, res) => {
     const { username, signedIn, userId } = req.session
@@ -40,7 +41,7 @@ router.post('/signup', async (req, res) => {
 
             res.redirect(`/error?error=${err}`)
         })
-    })
+})
 
 // GET -> SignIn /users/signin
 router.get('/signin', (req, res) => {
@@ -66,16 +67,16 @@ router.post('/signin', async (req, res) => {
 
                     res.redirect('/')
                 } else {
-                    res.send('something went wrong - no pw match')
+                    res.redirect(`/error?error=something%20wrong%20with%20credentials`)
                 }
             } else {
-                res.send('something went wrong - no user with that name')
+                res.redirect(`/error`)
             }
         })
-        .catch(error => {
+        .catch(err => {
             console.log('error')
 
-            res.send('something went wrong')
+            res.redirect(`/error?error=${err}`)
         })
 })
 
