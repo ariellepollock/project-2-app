@@ -35,10 +35,10 @@ router.post('/signup', async (req, res) => {
         .then(user => {
             res.redirect('/users/signin')
         })
-        .catch(error => {
+        .catch(err => {
             console.log('error')
 
-            res.send('something went wrong')
+            res.redirect(`/error?error=${err}`)
         })
     })
 

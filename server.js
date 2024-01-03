@@ -34,6 +34,14 @@ app.get('/', (req, res) => {
 
 app.use('/users', UserRouter)
 
+// error page
+app.get('/error', (req, res) => {
+    const error = req.query.error || 'This page does not exist'
+    
+    const { username, signedIn, userId } = req.session
+    res.render('error.ejs', { error, userId, username, signedIn })
+})
+
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Server Listener        //+//
 //+//+//+//+//+//+//+//+//+//+//+//
