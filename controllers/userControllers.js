@@ -20,7 +20,27 @@ router.get('/signup', (req, res) => {
     res.render('users/signup', { username, signedIn, userId })
 })
 
-// POST -> SignUp
+// POST -> SignUp /users/signup
+router.post('/signup', async (req, res) => {
+    // const { username, signedIn, userId } = req.session
+    const newUser = req.body
+
+    newUser.password = await bcrypt.hash(
+        newUser.password, 
+        await bcrypt.genSalt(10)
+    )
+
+    // create new user
+    User.create(newUser)
+        .then(user => {
+            res.redirect('/users/signin')
+        })
+        .catch(error => {
+            console.log('error')
+
+            res.send('something went wrong')
+        })
+    })
 
 // GET -> SignIn /users/signin
 router.get('/signin', (req, res) => {
@@ -30,6 +50,34 @@ router.get('/signin', (req, res) => {
 })
 
 // POST -> SignIn
+router.post('/signin', async (req, res) => {
+
+    const { username, password } = req.body
+    // search db for user
+    User.findOne({ username })
+        .then(async (user) => {
+            if (user) {
+                const result = await bcrypt.compare(password, user.password)
+
+                if (result) {
+                    req.session.username = username
+                    req.session.signedIn = true
+                    req.session.userId = user.id
+
+                    res.redirect('/')
+                } else {
+                    res.send('something went wrong - no pw match')
+                }
+            } else {
+                res.send('something went wrong - no user with that name')
+            }
+        })
+        .catch(error => {
+            console.log('error')
+
+            res.send('something went wrong')
+        })
+})
 
 // GET -> SignOut /users/signout
 router.get('/signout', (req, res) => {
@@ -39,6 +87,11 @@ router.get('/signout', (req, res) => {
 })
 
 // DELETE -> SignOut
+router.delete('/signout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/')
+    })
+})
 
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Export Router          //+//
