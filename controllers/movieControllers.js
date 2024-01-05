@@ -94,10 +94,10 @@ router.get('/search', async (req, res) => {
             res.render('movies/index', { movies: [], username, signedIn, userId, error: 'Sorry, no results found for your query' })
         } else {
             // constructing image URLs for each movie
-            const IMAGE_API_BASE_URL = tmdbConfig.images.base_url;
+            const IMAGE_API_BASE_URL = tmdbConfig.images.secure_base_url;
             const moviesWithImageUrls = movies.map(movie => ({
                 ...movie,
-                posterUrl: movie.poster_path ? `${IMAGE_API_BASE_URL}/${movie.poster_path}` : 'path_to_default_image_if_no_poster_available',
+                posterUrl: movie.poster_path ? `${IMAGE_API_BASE_URL}/w500/${movie.poster_path}` : 'path_to_default_image_if_no_poster_available',
             }))
 
             res.render('movies/index', { movies: moviesWithImageUrls, username, signedIn, userId, error: null })
