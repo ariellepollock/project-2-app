@@ -1,3 +1,11 @@
 body {
     background-color: antiquewhite;
 }
+
+.movieCard {
+    width: 20%;
+}
+
+h5 {
+    font-size: small;
+}
