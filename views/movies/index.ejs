@@ -1,7 +1,12 @@
 <%- include('../partials/header') %>
 
+    <!-- Search Form -->
+    <form action="/movies/search" method="get">
+        
+    </form>
+
     <div class="container center">
-        <div class="container row text-center">
+        <div class="container row text-left">
             <% movies.forEach(function(m) {%>
                 <div class="card mt-2 me-2 movieCard">
                     <img src="<%= m.posterUrl %>" alt="movie poster" class="card-img-top mt-2">

@@ -1,9 +1,20 @@
 body {
-    background-color: antiquewhite;
+    background-color: rgb(2, 9, 14);
+}
+
+.navbar {
+    background-color: rgb(5, 27, 46);
+}
+
+.userColor {
+    color: rgb(0, 195, 255);
 }
 
 .movieCard {
     width: 20%;
+    background-color: rgb(2, 9, 14);
+    color: white;
+    border: none;
 }
 
 h5 {

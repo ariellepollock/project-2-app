@@ -25,8 +25,8 @@ const fetchConfiguration = async () => {
     }
 }
 
-// GET -> /movies/discover -> get movies for index
-router.get('/discover', async (req, res) => {
+// GET -> /movies/popular -> get popular movies for index
+router.get('/popular', async (req, res) => {
     const { username, signedIn, userId } = req.session
     try {
         // Fetch TMDb configuration
