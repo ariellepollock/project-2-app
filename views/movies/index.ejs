@@ -22,7 +22,14 @@
                     <div class="card-body">
                         <h5 class="card-title"><%= m.title %></h5>
                         <a href="/movies/<%= m.id %>" class="card-link">Movie Details</a>
-                        <a href="#" class="card-link">Add to Watchlist</a>
+                        <form action="/movies/add-to-watchlist/<%= m.id %>" method="post">
+                            <select name="watchlistId">
+                                <% watchlists.forEach(function(watchlist) { %>
+                                    <option value="<%= watchlist._id %>"><%= watchlist.name %></option>
+                                <% }) %>
+                            </select>
+                            <button type="submit">Add to Watchlist</button>
+                        </form>
                     </div>
                 </div>
             <% }) %>

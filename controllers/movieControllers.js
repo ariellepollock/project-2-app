@@ -3,6 +3,7 @@
 //+//+//+//+//+//+//+//+//+//+//+//
 const express = require('express')
 const axios = require('axios')
+const Watchlist = require('../models/watchlist')
 
 
 //+//+//+//+//+//+//+//+//+//+//+//
@@ -38,42 +39,55 @@ fetchConfiguration()
 
 // GET -> /movies/popular -> get popular movies for index
 router.get('/popular', async (req, res) => {
-    const { username, signedIn, userId } = req.session
+    const { username, signedIn, userId } = req.session;
     try {
-        const apiKey = process.env.API_KEY
-        const apiUrl = `${process.env.DISCOVER_MOVIES_API_URL}&api_key=${apiKey}` // append api key to url
+        // Fetch popular movies
+        const apiKey = process.env.API_KEY;
+        const apiUrl = `${process.env.DISCOVER_MOVIES_API_URL}&api_key=${apiKey}`;
+        const apiRes = await axios.get(apiUrl);
+        const movies = apiRes.data.results;
 
-        // make api request with axios
-        const apiRes = await axios.get(apiUrl)
-        const movies = apiRes.data.results
-
-        // constructing image URLs for each movie
-        const IMAGE_API_BASE_URL = tmdbConfig.images.base_url
-        const DEFAULT_POSTER_URL = '/assets/no_poster_image.png'
-
+        // Constructing image URLs for each movie
+        const IMAGE_API_BASE_URL = tmdbConfig.images.base_url;
+        const DEFAULT_POSTER_URL = '/assets/no_poster_image.png';
         const moviesWithImageUrls = movies.map(movie => ({
             ...movie,
             posterUrl: movie.poster_path ? `${IMAGE_API_BASE_URL}/w500/${movie.poster_path}` : DEFAULT_POSTER_URL,
-        }))
+        }));
 
-        // apiRes.data.results is an array of movie objects
-        // res.send(apiRes.data.results)
-        res.render('movies/index', { movies: moviesWithImageUrls, username, signedIn, userId, error: null })
+        // Fetch the watchlist for the current user
+        const watchlists = await Watchlist.find({ userId: userId })
+
+        // Render the index view with movies, username, signedIn status, userId, and watchlist
+        res.render('movies/index', {
+            movies: moviesWithImageUrls,
+            username,
+            signedIn,
+            userId,
+            watchlists, // Include the watchlists array
+            error: null
+        });
     } catch (error) {
-        console.error(error)
-        res.render('movies/index', { movies: [], username, signedIn, userId, error: 'Error fetching popular movies' })
+        console.error(error);
+        res.render('movies/index', {
+            movies: [],
+            username,
+            signedIn,
+            userId,
+            watchlists: [], // Ensure you're providing an empty array if there's an error
+            error: 'Error fetching popular movies'
+        });
     }
 })
 
 // GET -> /movies/search - search for movies
 router.get('/search', async (req, res) => {
-    const { username, signedIn, userId } = req.session
-    const { query } = req.query
+    const { username, signedIn, userId } = req.session;
+    const { query } = req.query;
 
     try {
-        if (query === undefined) {
-            // Check if the query parameter is undefined (likely due to a page refresh)
-            res.render('movies/index', { movies: [], username, signedIn, userId, error: null })
+        if (!query) {
+            res.render('movies/index', { movies: [], username, signedIn, userId, error: null });
             return;
         }
 
@@ -87,34 +101,101 @@ router.get('/search', async (req, res) => {
         }
 
         // use search endpoint with query
-        const apiKey = process.env.API_KEY
-        const apiUrl = `${process.env.SEARCH_MOVIES_API_URL}?query=${query}&api_key=${apiKey}`
+        const apiKey = process.env.API_KEY;
+        const apiUrl = `${process.env.SEARCH_MOVIES_API_URL}?query=${query}&api_key=${apiKey}`;
 
         // make api request with axios
-        const apiRes = await axios.get(apiUrl)
-        const movies = apiRes.data.results
+        const apiRes = await axios.get(apiUrl);
+        const movies = apiRes.data.results;
 
         if (movies.length === 0) {
             // if no results found, render search page without results
-            res.render('movies/index', { movies: [], username, signedIn, userId, error: 'Sorry, no results found for your query' })
+            res.render('movies/index', { movies: [], username, signedIn, userId, error: 'Sorry, no results found for your query' });
         } else {
             // constructing image URLs for each movie
-            const IMAGE_API_BASE_URL = tmdbConfig.images.secure_base_url
-            const DEFAULT_POSTER_URL = '/assets/no_poster_image.png'
+            const IMAGE_API_BASE_URL = tmdbConfig.images.secure_base_url;
+            const DEFAULT_POSTER_URL = '/assets/no_poster_image.png';
 
             const moviesWithImageUrls = movies.map(movie => {
-                const posterUrl = movie.poster_path ? `${IMAGE_API_BASE_URL}/w500/${movie.poster_path}` : DEFAULT_POSTER_URL
+                const posterUrl = movie.poster_path ? `${IMAGE_API_BASE_URL}/w500/${movie.poster_path}` : DEFAULT_POSTER_URL;
                 return {
                     ...movie,
                     posterUrl,
-                }
-            })
+                };
+            });
 
-            res.render('movies/index', { movies: moviesWithImageUrls, username, signedIn, userId, error: null })
+            // Fetch the watchlist for the current user
+            const watchlists = await Watchlist.find({ userId });
+
+            res.render('movies/index', { movies: moviesWithImageUrls, username, signedIn, userId, watchlists, error: null });
         }
     } catch (error) {
-        console.error('Error searching for movies:', error)
-        res.render('movies/index', { movies: [], username, signedIn, userId, error: 'Error searching for movies' })
+        console.error('Error searching for movies:', error);
+
+        // Fetch the watchlist for the current user
+        const watchlists = await Watchlist.find({ userId });
+
+        res.render('movies/index', { movies: [], username, signedIn, userId, watchlists, error: 'Error searching for movies' });
+    }
+})
+
+// POST -> /movies/add-to-watchlist/:movieId -> add a movie to a watchlist
+router.post('/add-to-watchlist/:movieId', async (req, res) => {
+    const { movieId } = req.params;
+    const { watchlistId } = req.body;
+
+    try {
+        const watchlist = await Watchlist.findById(watchlistId);
+        if (!watchlist) {
+            const apiKey = process.env.API_KEY;
+            const apiUrl = `${process.env.DISCOVER_MOVIES_API_URL}&api_key=${apiKey}`;
+            const apiRes = await axios.get(apiUrl);
+            const movies = apiRes.data.results;
+            
+            return res.render('movies/index', { movies, error: 'Watchlist not found' });
+        }
+
+        // Check if the movie already exists in the watchlist
+        const existingMovie = watchlist.movies.find(movie => movie._id === movieId);
+        if (existingMovie) {
+            const apiKey = process.env.API_KEY;
+            const apiUrl = `${process.env.DISCOVER_MOVIES_API_URL}&api_key=${apiKey}`;
+            const apiRes = await axios.get(apiUrl);
+            const movies = apiRes.data.results;
+
+            return res.render('movies/index', { movies, error: 'Movie already exists in the watchlist' });
+        }
+
+        // Add the movie to the watchlist by pushing its ID
+        watchlist.movies.push({ _id: movieId });
+
+        await watchlist.save();
+
+        // Fetch popular movies again after adding to the watchlist
+        const apiKey = process.env.API_KEY;
+        const apiUrl = `${process.env.DISCOVER_MOVIES_API_URL}&api_key=${apiKey}`;
+        const apiRes = await axios.get(apiUrl);
+        const movies = apiRes.data.results;
+
+        // Fetch the updated watchlists for the current user
+        const updatedWatchlists = await Watchlist.find({ userId: req.session.userId });
+
+        // Render the index view with movies and updated watchlists
+        res.render('movies/index', {
+            movies,
+            watchlists: updatedWatchlists, // Update watchlists data
+            error: null
+        });
+    } catch (error) {
+        console.error(error);
+
+        // Handle errors by fetching popular movies and passing error message
+        const apiKey = process.env.API_KEY;
+        const apiUrl = `${process.env.DISCOVER_MOVIES_API_URL}&api_key=${apiKey}`;
+        const apiRes = await axios.get(apiUrl);
+        const movies = apiRes.data.results;
+
+        res.render('movies/index', { movies, error: 'Error adding movie to watchlist' });
     }
 })
 

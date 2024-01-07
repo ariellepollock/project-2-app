@@ -9,17 +9,16 @@ const { Schema, model } = mongoose
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Schema definition      //+//
 //+//+//+//+//+//+//+//+//+//+//+//
+const movieSchema = new Schema({
+    title: String,
+})
+
 const watchlistSchema = new Schema ({
     title: {
         type: String,
         required: true,
     },
-    movies: [
-        {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Movie',
-        },
-    ],
+    movies: [movieSchema],
 })
 
 //+//+//+//+//+//+//+//+//+//+//+//+//
