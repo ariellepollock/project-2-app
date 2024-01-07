@@ -11,6 +11,7 @@ const middleware = require('./utils/middleware')
 //+//+//+//+//+//+//+//+//+//+//+//
 const UserRouter = require('./controllers/userControllers')
 const MovieRouter = require('./controllers/movieControllers')
+const WatchlistRouter = require('./controllers/watchlistControllers')
 
 //+//+//+//+//+//+//+//+//+//+//+//+//+//+//+//+//
 //+//  Create the app object + view engine   //+//
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', UserRouter)
 app.use('/movies', MovieRouter)
+app.use('/watchlists', WatchlistRouter)
 
 // error page
 app.get('/error', (req, res) => {

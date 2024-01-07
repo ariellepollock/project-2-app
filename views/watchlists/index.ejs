@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+    <h1>My Watchlists</h1>
+
+    <ul>
+        <% watchlists.forEach(watchlist => { %>
+            <li>
+                <a href="/watchlists/<%= watchlist._id %>"><%= watchlist.name %></a>
+            </li>
+        <% }) %>
+    </ul>
+
+    <!-- Add New Watchlist Form -->
+    <form action="/watchlists/create" method="POST">
+        <input type="text" name="name" placeholder="Enter Watchlist Name" required>
+        <button type="submit">Create Watchlist</button>
+    </form>
+
+<%- include('../partials/footer') %>

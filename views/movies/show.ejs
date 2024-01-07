@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+
+    <section class="movie-details">
+        <div class="movie-poster">
+            <img src="<%= movie.posterUrl %>" alt="<%= movie.title %> Poster">
+        </div>
+
+        <div class="movie-info">
+            <h1><%= movie.title %> (<%= movie.releaseYear %>)</h1>
+            <h2>Genres:</h2>
+            <p><%= movie.genres %></p>
+            <h2>Overview:</h2>
+            <p><%= movie.overview %></p>
+            <!-- Include more movie details if needed -->
+        </div>
+    </section>
+
+<%- include('../partials/footer') %>

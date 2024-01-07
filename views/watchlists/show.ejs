@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+
+    <h1><%= watchlist.name %></h1>
+
+    <ul>
+        <% watchlist.movies.forEach(movie => { %>
+            <li><%= movie.title %></li>
+        <% }) %>
+    </ul>
+
+    <!-- Add Movie to Watchlist Form -->
+    <form action="/watchlists/<%= watchlist._id %>/add-movie" method="POST">
+        <select name="movieId" required>
+            <% movies.forEach(movie => { %>
+                <option value="<%= movie._id %>"><%= movie.title %></option>
+            <% }) %>
+        </select>
+        <button type="submit">Add Movie</button>
+    </form>
+
+<%- include('../partials/footer') %>

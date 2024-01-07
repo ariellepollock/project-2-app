@@ -15,12 +15,14 @@ const router = express.Router()
 //+//  Fetch TMDb Configuration  //+//
 //+//+//+//+//+//+//+//+//+//+//+//+//
 let tmdbConfig
+let IMAGE_API_BASE_URL = ''
 
 const fetchConfiguration = async () => {
     try {
         const apiKey = process.env.API_KEY;
         const response = await axios.get(`https://api.themoviedb.org/3/configuration?api_key=${apiKey}`);
         tmdbConfig = response.data;
+        IMAGE_API_BASE_URL = tmdbConfig.images.secure_base_url
     } catch (error) {
         throw new Error('Error fetching configuration:', error);
     }
@@ -56,7 +58,7 @@ router.get('/popular', async (req, res) => {
 
         // apiRes.data.results is an array of movie objects
         // res.send(apiRes.data.results)
-        res.render('movies/index', { movies: moviesWithImageUrls, username, signedIn, userId })
+        res.render('movies/index', { movies: moviesWithImageUrls, username, signedIn, userId, error: null })
     } catch (error) {
         console.error(error)
         res.render('movies/index', { movies: [], username, signedIn, userId, error: 'Error fetching popular movies' })
@@ -69,9 +71,10 @@ router.get('/search', async (req, res) => {
     const { query } = req.query
 
     try {
-        if (!query) {
-            res.render('movies/index', { movies: [], username, signedIn, userId, error: 'Please enter a search query' })
-            return
+        if (query === undefined) {
+            // Check if the query parameter is undefined (likely due to a page refresh)
+            res.render('movies/index', { movies: [], username, signedIn, userId, error: null })
+            return;
         }
 
         if (!tmdbConfig) {
@@ -104,8 +107,8 @@ router.get('/search', async (req, res) => {
                 return {
                     ...movie,
                     posterUrl,
-                };
-            });
+                }
+            })
 
             res.render('movies/index', { movies: moviesWithImageUrls, username, signedIn, userId, error: null })
         }
@@ -114,6 +117,42 @@ router.get('/search', async (req, res) => {
         res.render('movies/index', { movies: [], username, signedIn, userId, error: 'Error searching for movies' })
     }
 })
+
+// GET -> /movies/:id -> get details for a specific movie
+router.get('/:id', async (req, res) => {
+    const { username, signedIn, userId } = req.session
+    const movieId = req.params.id
+
+    try {
+        if (!movieId) {
+            res.render('error', { message: 'No movie ID provided', signedIn })
+            return
+        }
+
+        // fetch details for specific movie using TMDb
+        const apiKey = process.env.API_KEY
+        const movieDetailsUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`
+
+        const response = await axios.get(movieDetailsUrl)
+        const movieDetails = response.data
+
+        // constructing movie object with details
+        const movie = {
+            title: movieDetails.title,
+            posterUrl: movieDetails.poster_path ? `${IMAGE_API_BASE_URL}/w500/${movieDetails.poster_path}` : DEFAULT_POSTER_URL,
+            releaseYear: movieDetails.release_date ? movieDetails.release_date.slice(0, 4) : 'N/A',
+            genres: movieDetails.genres.map(genre => genre.name).join(', '),
+            overview: movieDetails.overview || 'No overview available',
+        }
+
+        res.render('movies/show', { movie, username, signedIn, userId })
+    } catch (error) {
+        console.error('Error fetching movie details', error)
+        res.render('error', { error: 'Error fetching movie details', signedIn, username })
+    }
+})
+
+
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Export Router          //+//
 //+//+//+//+//+//+//+//+//+//+//+//
