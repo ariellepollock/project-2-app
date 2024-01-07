@@ -1,17 +1,23 @@
 <%- include('../partials/header') %>
 
     <h1>My Watchlists</h1>
-
-    <ul>
-        <% watchlists.forEach(watchlist => { %>
-            <li>
-                <a href="/watchlists/<%= watchlist._id %>"><%= watchlist.name %></a>
-            </li>
-        <% }) %>
-    </ul>
+    
+    <!-- Watchlists -->
+    <div class="container center">
+        <div class="container row text-left">
+            <% watchlists.forEach(function(w) {%>
+                <div class="card mt-2 me-2 listCard">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= w.title %></h5>
+                        <a href="/watchlists/<%= w.id %>" class="card-link">View List</a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
 
     <!-- Add New Watchlist Form -->
-    <form action="/watchlists/create" method="POST">
+    <form action="/watchlists/new" method="POST">
         <input type="text" name="name" placeholder="Enter Watchlist Name" required>
         <button type="submit">Create Watchlist</button>
     </form>

@@ -1,21 +1,41 @@
 <%- include('../partials/header') %>
 
-    <h1><%= watchlist.name %></h1>
+    <% if (watchlist) { %>
+        <h1><%= watchlist.name %></h1>
 
-    <ul>
-        <% watchlist.movies.forEach(movie => { %>
-            <li><%= movie.title %></li>
-        <% }) %>
-    </ul>
+        <% if (watchlist.movies && watchlist.movies.length > 0) { %>
+            <ul>
+                <% watchlist.movies.forEach(movie => { %>
+                    <li><%= movie.title %></li>
+                <% }) %>
+            </ul>
 
-    <!-- Add Movie to Watchlist Form -->
-    <form action="/watchlists/<%= watchlist._id %>/add-movie" method="POST">
-        <select name="movieId" required>
-            <% movies.forEach(movie => { %>
-                <option value="<%= movie._id %>"><%= movie.title %></option>
-            <% }) %>
-        </select>
-        <button type="submit">Add Movie</button>
-    </form>
+            <!-- Add Movie to Watchlist Form -->
+            <form action="/watchlists/<%= watchlist._id %>/add-movie" method="POST">
+                <select name="movieId" required>
+                    <% movies.forEach(movie => { %>
+                        <option value="<%= movie._id %>"><%= movie.title %></option>
+                    <% }) %>
+                </select>
+                <button type="submit">Add Movie</button>
+            </form>
+        <% } else { %>
+            <!-- Display a message if there are no movies in the watchlist -->
+            <p>No movies in this watchlist yet.</p>
+
+            <!-- Add Movie to Watchlist Form -->
+            <form action="/watchlists/<%= watchlist._id %>/add-movie" method="POST">
+                <select name="movieId" required>
+                    <% movies.forEach(movie => { %>
+                        <option value="<%= movie._id %>"><%= movie.title %></option>
+                    <% }) %>
+                </select>
+                <button type="submit">Add Movie</button>
+            </form>
+        <% } %>
+    <% } else { %>
+        <!-- Display a message if the watchlist doesn't exist -->
+        <p>Watchlist not found.</p>
+    <% } %>
 
 <%- include('../partials/footer') %>
