@@ -2,10 +2,12 @@
 
     <h1>Create New Watchlist</h1>
 
-    <form action="/watchlists" method="POST">
-        <label for="name">Watchlist Name:</label>
-        <input type="text" name="name" placeholder="Watchlist Title">
-        <button type="submit">Create Watchlist</button>
+    <form method="POST" action="/watchlists">
+        <div class="mb-3">
+            <label for="name" class="form-label">Watchlist Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Watchlist</button>
     </form>
 
 <%- include('../partials/footer') %>

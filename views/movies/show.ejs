@@ -11,7 +11,17 @@
             <p><%= movie.genres %></p>
             <h2>Overview:</h2>
             <p><%= movie.overview %></p>
-            <!-- Include more movie details if needed -->
+
+            <!-- Dropdown for watchlist selection -->
+            <form action="/movies/add-to-watchlist/<%= movie._id %>" method="post">
+                <label for="watchlist">Add to Watchlist:</label>
+                <select name="watchlistId" id="watchlist">
+                    <% watchlists.forEach(function(watchlist) { %>
+                        <option value="<%= watchlist._id %>"><%= watchlist.name %></option>
+                    <% }) %>
+                </select>
+                <button type="submit">Add to Watchlist</button>
+            </form>
         </div>
     </section>
 

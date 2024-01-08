@@ -16,20 +16,13 @@
         <% } %>
 
         <div class="container row text-left">
-            <% movies.forEach(function(m) {%>
+            <% movies.forEach(function(m) { %>
                 <div class="card mt-2 me-2 movieCard">
                     <img src="<%= m.posterUrl %>" alt="movie poster" class="card-img-top mt-2">
                     <div class="card-body">
                         <h5 class="card-title"><%= m.title %></h5>
                         <a href="/movies/<%= m.id %>" class="card-link">Movie Details</a>
-                        <form action="/movies/add-to-watchlist/<%= m.id %>" method="post">
-                            <select name="watchlistId">
-                                <% watchlists.forEach(function(watchlist) { %>
-                                    <option value="<%= watchlist._id %>"><%= watchlist.name %></option>
-                                <% }) %>
-                            </select>
-                            <button type="submit">Add to Watchlist</button>
-                        </form>
+                        
                     </div>
                 </div>
             <% }) %>

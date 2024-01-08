@@ -98,24 +98,6 @@ router.post('/:id/add-movie', async (req, res) => {
     }
 })
 
-// GET -> add movie to watchlist with id
-router.get('/:watchlistId/add-movie/:movieId', async (req, res) => {
-    const { watchlistId, movieId } = req.params;
-
-    try {
-        // Get the watchlist by ID and update its movies array with the new movie ID
-        const watchlist = await Watchlist.findById(watchlistId);
-        watchlist.movies.push(movieId);
-        await watchlist.save();
-
-        // Redirect the user back to the watchlist or movie page or send a success response
-        res.redirect(`/watchlists/${watchlistId}`);
-    } catch (error) {
-        console.error('Error adding movie to watchlist:', error);
-        res.status(500).send('Error adding movie to watchlist');
-    }
-})
-
 // POST -> /watchlists -> create a new watchlist
 router.post('/', async (req, res) => {
     const { name } = req.body; // Change 'title' to 'name' if that's the field name
