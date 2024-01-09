@@ -117,8 +117,9 @@ router.post('/', async (req, res) => {
 })
 
 // UPDATE -> /watchlist/update/:id
-router.put('/update/:id', (req, res) => {
+router.post('/update/:id', (req, res) => {
     const { username, loggedIn, userId } = req.session
+
     // target the specific watchlist
     const watchlistId = req.params.id
     const theUpdatedList = req.body
@@ -133,7 +134,7 @@ router.put('/update/:id', (req, res) => {
     // this line of code converts that two times
     // which results in a boolean value
 
-    theUpdatedList.title = !!theUpdatedList.title
+    // theUpdatedList.title = !!theUpdatedList.title
 
     console.log('this is req.body', theUpdatedList)
     // find the place
@@ -151,7 +152,7 @@ router.put('/update/:id', (req, res) => {
             }
         })
         .then(returnedList => {
-            res.redirect(`/pokemon/captured/${watchlistId}`)
+            res.redirect(`/watchlists/${watchlistId}`)
         })
         // if not, send error
         .catch(err => {
@@ -162,7 +163,7 @@ router.put('/update/:id', (req, res) => {
 
 // DELETE -> /watchlists/delete/:id
 // Remove watchlist from a user's watchlists, and is only available to authorized user
-router.delete('/delete/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     const { username, loggedIn, userId } = req.session
     // target the specific place
     const watchlistId = req.params.id
@@ -182,7 +183,7 @@ router.delete('/delete/:id', (req, res) => {
         // redirect to another page
         .then(deletedList => {
             console.log('this was returned from deleteOne', deletedList)
-            res.redirect('watchlists/mine')
+            res.redirect('/watchlists/mine')
         })
         // if err -> send to err page
         .catch(err => {

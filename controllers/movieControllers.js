@@ -179,7 +179,7 @@ router.post('/add-to-watchlist/:movieId', async (req, res) => {
 // GET -> /movies/:id -> get details for a specific movie
 router.get('/:id', async (req, res) => {
     const movieId = req.params.id;
-    
+
 
     try {
         if (!movieId) {
@@ -190,6 +190,7 @@ router.get('/:id', async (req, res) => {
         const movieDetailsUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
         const response = await axios.get(movieDetailsUrl);
         const movieDetails = response.data;
+
         const DEFAULT_POSTER_URL = '/assets/no_poster_image.png';
 
         const movie = {
@@ -203,7 +204,7 @@ router.get('/:id', async (req, res) => {
 
         const userId = req.session.userId;
         const watchlists = await Watchlist.find({ owner: userId });
-        console.log(watchlists)
+
 
         res.render('movies/show', { movie, username: req.session.username, signedIn: req.session.signedIn, userId, watchlists });
     } catch (error) {
