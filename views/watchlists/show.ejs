@@ -6,7 +6,7 @@
         <% if (watchlist.movies && watchlist.movies.length > 0) { %>
             <ul>
                 <% watchlist.movies.forEach(movie => { %>
-                    <li><%= movie.title %></li>
+                    <li><%= movie.title %></li> <!-- Accessing the movie title -->
                 <% }) %>
             </ul>
         <% } else { %>

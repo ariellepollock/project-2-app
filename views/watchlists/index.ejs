@@ -17,9 +17,12 @@
     </div>
 
     <!-- Add New Watchlist Form -->
-    <form action="/watchlists/new" method="POST">
-        <input type="text" name="name" placeholder="Enter Watchlist Name" required>
-        <button type="submit">Create Watchlist</button>
+    <form method="POST" action="/watchlists">
+        <div class="mb-3 m-4">
+            <label for="name" class="form-label lightOdark">Watchlist Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Watchlist</button>
     </form>
 
 <%- include('../partials/footer') %>

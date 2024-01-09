@@ -1,12 +1,5 @@
 <%- include('../partials/header') %>
 
-    <!-- Search Form -->
-    <form action="/movies/search" method="get">
-        <label for="query">Search for Movies</label>
-        <input type="text" id="query" name="query" required>
-        <button type="submit">SEARCH</button>
-    </form>
-
     <!-- Display Movie Posters + Titles -->
     <div class="container center">
         <% if (error) { %>

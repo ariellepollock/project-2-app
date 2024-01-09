@@ -10,11 +10,10 @@
         <div id="navbarNav" class="collapse navbar-collapse me-3">
             <% if (signedIn) {%>
                 <a href="/watchlists/new" class="nav-link text-light me-3">Create A Watchlist</a>
-                <a href="/movies/search" class="nav-link text-light me-3">Search Movies</a>
                 <a href="/movies/popular" class="nav-link text-light me-3">Popular Movies</a>
                 <a href="/users/signout" class="nav-link text-light me-3">Sign Out</a>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form action="/movies/search" method="get" class="d-flex" role="search">
+                    <input class="form-control me-2" type="text" id="query" name="query" placeholder="Search Movies" aria-label="Search" required>
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             <%} else {%>

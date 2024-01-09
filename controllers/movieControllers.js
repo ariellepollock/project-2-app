@@ -3,7 +3,7 @@
 //+//+//+//+//+//+//+//+//+//+//+//
 const express = require('express')
 const axios = require('axios')
-const Watchlist = require('../models/watchlist')
+const { Watchlist, Movie } = require('../models/watchlist')
 
 
 //+//+//+//+//+//+//+//+//+//+//+//
@@ -153,6 +153,7 @@ router.get('/search', async (req, res) => {
 router.post('/add-to-watchlist/:movieId', async (req, res) => {
     const { movieId } = req.params;
     const { watchlistId } = req.body;
+    const { signedIn } = req.session
 
     try {
         const watchlist = await Watchlist.findById(watchlistId);
@@ -164,10 +165,10 @@ router.post('/add-to-watchlist/:movieId', async (req, res) => {
         if (existingMovie) {
             return res.render('error', { error: 'Movie already exists in the watchlist' });
         }
-
-        watchlist.movies.push({ _id: movieId });
+        const movie = await Movie.create({ movieId: movieId, title: req.body.title })
+        watchlist.movies.push(movie);
         await watchlist.save();
-
+     
         res.redirect(`/movies/${movieId}`);
     } catch (error) {
         console.error('Error adding movie to watchlist:', error);
@@ -178,6 +179,7 @@ router.post('/add-to-watchlist/:movieId', async (req, res) => {
 // GET -> /movies/:id -> get details for a specific movie
 router.get('/:id', async (req, res) => {
     const movieId = req.params.id;
+    console.log(req.session)
 
     try {
         if (!movieId) {
@@ -188,10 +190,10 @@ router.get('/:id', async (req, res) => {
         const movieDetailsUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
         const response = await axios.get(movieDetailsUrl);
         const movieDetails = response.data;
-
         const DEFAULT_POSTER_URL = '/assets/no_poster_image.png';
 
         const movie = {
+            id: movieDetails.id,
             title: movieDetails.title,
             posterUrl: movieDetails.poster_path ? `${IMAGE_API_BASE_URL}/w500/${movieDetails.poster_path}` : DEFAULT_POSTER_URL,
             releaseYear: movieDetails.release_date ? movieDetails.release_date.slice(0, 4) : 'N/A',
@@ -200,7 +202,8 @@ router.get('/:id', async (req, res) => {
         };
 
         const userId = req.session.userId;
-        const watchlists = await Watchlist.find({ userId });
+        const watchlists = await Watchlist.find({ owner: userId });
+        console.log(watchlists)
 
         res.render('movies/show', { movie, username: req.session.username, signedIn: req.session.signedIn, userId, watchlists });
     } catch (error) {

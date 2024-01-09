@@ -3,7 +3,7 @@
 //+//+//+//+//+//+//+//+//+//+//+//
 const express = require('express')
 const axios = require('axios')
-const Watchlist = require('../models/watchlist')
+const {Watchlist} = require('../models/watchlist')
 
 
 //+//+//+//+//+//+//+//+//+//+//+//
@@ -39,6 +39,7 @@ const fetchMovies = async (query) => {
 router.get('/mine', async (req, res) => {
     const signedIn = req.session.signedIn
     const username = req.session.username
+    console.log(req.session)
     try {
         const watchlists = await Watchlist.find()
         res.render('watchlists/index', { watchlists, signedIn, username })
@@ -101,11 +102,12 @@ router.post('/:id/add-movie', async (req, res) => {
 // POST -> /watchlists -> create a new watchlist
 router.post('/', async (req, res) => {
     const { name } = req.body; // Change 'title' to 'name' if that's the field name
+    const username = req.session.username;
+    const userId = req.session.userId;
     try {
-        const newWatchlist = await Watchlist.create({ title: name }); // Ensure the field name matches your model
+        const newWatchlist = await Watchlist.create({ title: name, owner: userId }); // Ensure the field name matches your model
         const watchlists = await Watchlist.find(); // Fetch all watchlists after creating a new one
         const signedIn = req.session.signedIn;
-        const username = req.session.username;
         res.render('watchlists/index', { watchlists, signedIn, username }); // Pass watchlists data to index view
     } catch (error) {
         console.error(error);

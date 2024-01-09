@@ -13,13 +13,14 @@
             <p><%= movie.overview %></p>
 
             <!-- Dropdown for watchlist selection -->
-            <form action="/movies/add-to-watchlist/<%= movie._id %>" method="post">
+            <form action="/movies/add-to-watchlist/<%= movie.id %>" method="post">
                 <label for="watchlist">Add to Watchlist:</label>
                 <select name="watchlistId" id="watchlist">
                     <% watchlists.forEach(function(watchlist) { %>
-                        <option value="<%= watchlist._id %>"><%= watchlist.name %></option>
+                        <option value="<%= watchlist._id %>"><%= watchlist.title %></option>
                     <% }) %>
                 </select>
+                <input hidden name="title" value="<%= movie.title %>"></input>
                 <button type="submit">Add to Watchlist</button>
             </form>
         </div>
