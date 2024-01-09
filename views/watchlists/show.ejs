@@ -6,15 +6,33 @@
         <% if (watchlist.movies && watchlist.movies.length > 0) { %>
             <ul>
                 <% watchlist.movies.forEach(movie => { %>
-                    <li><%= movie.title %></li> <!-- Accessing the movie title -->
+                    <li>
+                        <a href="/movies/<%= movie.id %>"><%= movie.title %></a>
+                    </li>
                 <% }) %>
             </ul>
         <% } else { %>
-            <p>No movies in this watchlist yet.</p>
+            <p>Gotta add some movies my friend!</p>
+        <% } %>
+
+        <% if (signedIn && username && userId && watchlist.owner.equals(userId)) { %>
+            <!-- Delete Button -->
+            <form method="POST" action="/watchlists/delete/<%= watchlist._id %>">
+                <button type="submit" class="btn btn-danger">Delete Watchlist</button>
+            </form>
+
+            <!-- Update Form -->
+            <form method="POST" action="/watchlists/update/<%= watchlist._id %>">
+                <div class="mb-3">
+                    <label for="newTitle" class="form-label lightOdark">New Watchlist Title</label>
+                    <input type="text" class="form-control" id="newTitle" name="title" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Watchlist Title</button>
+            </form>
         <% } %>
 
     <% } else { %>
-        <p>Watchlist not found.</p>
+        <p>Watchlist not found, so sorry.</p>
     <% } %>
 
 <%- include('../partials/footer') %>

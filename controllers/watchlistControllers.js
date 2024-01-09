@@ -39,7 +39,7 @@ const fetchMovies = async (query) => {
 router.get('/mine', async (req, res) => {
     const signedIn = req.session.signedIn
     const username = req.session.username
-    console.log(req.session)
+
     try {
         const watchlists = await Watchlist.find()
         res.render('watchlists/index', { watchlists, signedIn, username })
@@ -63,8 +63,9 @@ router.get('/:id', async (req, res) => {
         const watchlist = await Watchlist.findById(id).populate('movies');
         const signedIn = req.session.signedIn;
         const username = req.session.username;
+        const userId = req.session.userId
 
-        res.render('watchlists/show', { watchlist, signedIn, username });
+        res.render('watchlists/show', { watchlist, signedIn, username, userId });
     } catch (error) {
         console.error(error);
         res.render('watchlists/show', { watchlist: null, error: 'Error fetching watchlist details', signedIn: false, username: null });
@@ -113,6 +114,81 @@ router.post('/', async (req, res) => {
         console.error(error);
         res.render('watchlists/new', { error: 'Error creating watchlist' });
     }
+})
+
+// UPDATE -> /watchlist/update/:id
+router.put('/update/:id', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    // target the specific watchlist
+    const watchlistId = req.params.id
+    const theUpdatedList = req.body
+
+    // sometimes mean hackers try to steal stuff
+    // remove the ownership from req.body(even if it isn't sent)
+    // then reassign using the session info
+    delete theUpdatedList.owner
+    theUpdatedList.owner = userId
+
+    // default value for a checked checkbox is 'on'
+    // this line of code converts that two times
+    // which results in a boolean value
+
+    theUpdatedList.title = !!theUpdatedList.title
+
+    console.log('this is req.body', theUpdatedList)
+    // find the place
+    Watchlist.findById(watchlistId)
+        // check for authorization(aka ownership)
+        // if they are the owner, allow update and refresh the page
+        .then(foundList => {
+            // determine if loggedIn user is authorized to update this(aka, the owner)
+            if (foundList.owner == userId) {
+                // here is where we update
+                return foundList.updateOne(theUpdatedList)
+            } else {
+                // if the loggedIn user is NOT the owner
+                res.redirect(`/error?error=You%20Are%20Not%20Allowed%20To%20Update%20This%20List`)
+            }
+        })
+        .then(returnedList => {
+            res.redirect(`/pokemon/captured/${watchlistId}`)
+        })
+        // if not, send error
+        .catch(err => {
+            console.log('error')
+            res.redirect(`/error?error=${err}`)
+        })
+})
+
+// DELETE -> /watchlists/delete/:id
+// Remove watchlist from a user's watchlists, and is only available to authorized user
+router.delete('/delete/:id', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    // target the specific place
+    const watchlistId = req.params.id
+    // find it in the database
+    Watchlist.findById(watchlistId)
+        // delete it 
+        .then(watchlist => {
+            // determine if loggedIn user is authorized to delete this(aka, the owner)
+            if (watchlist.owner == userId) {
+                // here is where we delete
+                return watchlist.deleteOne()
+            } else {
+                // if the loggedIn user is NOT the owner
+                res.redirect(`/error?error=You%20Are%20Not%20Allowed%20to%20Delete%20this%20Watchlist`)
+            }
+        })
+        // redirect to another page
+        .then(deletedList => {
+            console.log('this was returned from deleteOne', deletedList)
+            res.redirect('watchlists/mine')
+        })
+        // if err -> send to err page
+        .catch(err => {
+            console.log('error')
+            res.redirect(`/error?error=${err}`)
+        })
 })
 
 //+//+//+//+//+//+//+//+//+//+//+//

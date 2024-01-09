@@ -168,7 +168,7 @@ router.post('/add-to-watchlist/:movieId', async (req, res) => {
         const movie = await Movie.create({ movieId: movieId, title: req.body.title })
         watchlist.movies.push(movie);
         await watchlist.save();
-     
+
         res.redirect(`/movies/${movieId}`);
     } catch (error) {
         console.error('Error adding movie to watchlist:', error);
@@ -179,7 +179,7 @@ router.post('/add-to-watchlist/:movieId', async (req, res) => {
 // GET -> /movies/:id -> get details for a specific movie
 router.get('/:id', async (req, res) => {
     const movieId = req.params.id;
-    console.log(req.session)
+    
 
     try {
         if (!movieId) {
