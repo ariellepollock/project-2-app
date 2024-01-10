@@ -24,3 +24,40 @@ h5 {
 .lightOdark {
     color: white;
 }
+
+h1 {
+    font-size: 4vw;
+    color: white;
+    text-align: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.homeH1 {
+    margin-top: 45vh;
+    transform: translateY(-50%);
+    font-size: 5vw;
+}
+
+.wList {
+    text-align: center;
+    color: rgb(0, 195, 255);
+    list-style: none;
+}
+
+.wDelete {
+    display: block;
+    margin: 10vh auto;
+}
+
+.wUpdate {
+    display: block;
+    margin: auto;
+    margin-top: 20vh;
+    width: 40%;
+}
+
+.wUpdateB {
+    display: block;
+    margin: 0 auto;
+}
