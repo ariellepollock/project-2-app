@@ -37,17 +37,21 @@ const fetchMovies = async (query) => {
 
 // GET -> /watchlists/mine – display watchlist index
 router.get('/mine', async (req, res) => {
-    const signedIn = req.session.signedIn
-    const username = req.session.username
+    const { userId } = req.session
+
+    if (!userId) {
+        return res.redirect('/signin')
+    }
 
     try {
-        const watchlists = await Watchlist.find()
-        res.render('watchlists/index', { watchlists, signedIn, username })
+        const watchlists = await Watchlist.find({ owner: userId })
+        res.render('watchlists/index', { watchlists, signedIn: req.session.signedIn, username: req.session.username })
     } catch (error) {
         console.error(error)
         res.render('watchlists/index', { watchlists: [], error: 'Error fetching watchlists' })
     }
 })
+
 
 // GET -> /watchlists/new -> display form to create new watchlist
 router.get('/new', (req, res) => {
