@@ -1,19 +1,37 @@
 <%- include('../partials/header') %>
 
-    <section class="movie-details">
-        <div class="movie-poster">
-            <img src="<%= movie.posterUrl %>" alt="<%= movie.title %> Poster">
+    <!-- Bootstrap Carousel -->
+    <div id="movieImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <% movie.images.forEach(function(image, index) { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                    <img src="<%= image %>" class="d-block w-100" alt="Movie Image <%= index + 1 %>">
+                </div>
+            <% }); %>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#movieImagesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#movieImagesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <section class="movie-details">
 
         <div class="movie-info">
             <h1><%= movie.title %> (<%= movie.releaseYear %>)</h1>
-            <h2>Genres:</h2>
+            <h3>Genres:</h3>
             <p><%= movie.genres %></p>
-            <h2>Overview:</h2>
+            <h3>Overview:</h3>
             <p><%= movie.overview %></p>
+        </div>
 
+        <% if (signedIn) { %>
             <!-- Dropdown for watchlist selection -->
-            <form action="/movies/add-to-watchlist/<%= movie.id %>" method="post">
+            <form action="/movies/add-to-watchlist/<%= movie.id %>" method="post" class="mt-5">
                 <label for="watchlist">Add to Watchlist:</label>
                 <select name="watchlistId" id="watchlist">
                     <% watchlists.forEach(function(watchlist) { %>
@@ -23,7 +41,7 @@
                 <input hidden name="title" value="<%= movie.title %>"></input>
                 <button type="submit">Add to Watchlist</button>
             </form>
-        </div>
+        <% } %>
     </section>
 
 <%- include('../partials/footer') %>
