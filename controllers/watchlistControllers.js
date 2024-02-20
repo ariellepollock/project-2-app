@@ -52,7 +52,6 @@ router.get('/mine', async (req, res) => {
     }
 })
 
-
 // GET -> /watchlists/new -> display form to create new watchlist
 router.get('/new', (req, res) => {
     const signedIn = req.session.signedIn
@@ -76,39 +75,39 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-// POST -> /watchlists/:id/add-movie -> add a movie to a watchlist
-router.post('/:id/add-movie', async (req, res) => {
-    const { id } = req.params;
-    const { movieId, movieTitle } = req.body;
+// // POST -> /watchlists/:id/add-movie -> add a movie to a watchlist
+// router.post('/:id/add-movie', async (req, res) => {
+//     const { id } = req.params
+//     const { movieId, movieTitle } = req.body
 
-    try {
-        const watchlist = await Watchlist.findById(id);
-        if (!watchlist) {
-            return res.render('watchlists/show', { watchlist: null, error: 'Watchlist not found' });
-        }
+//     try {
+//         const watchlist = await Watchlist.findById(id)
+//         if (!watchlist) {
+//             return res.render('watchlists/show', { watchlist: null, error: 'Watchlist not found' })
+//         }
 
-        // Add the movie to the watchlist with its ID and title
-        watchlist.movies.push({
-            _id: movieId,
-            title: movieTitle,
-            // Add other movie details if needed
-        });
+//         // Add the movie to the watchlist with its ID and title
+//         watchlist.movies.push({
+//             _id: movieId,
+//             title: movieTitle,
+//             // Add other movie details if needed
+//         })
 
-        await watchlist.save();
+//         await watchlist.save()
 
-        // Redirect to the view watchlist page after adding the movie
-        res.redirect(`/watchlists/${id}`);
-    } catch (error) {
-        console.error(error);
-        res.render('watchlists/show', { watchlist: null, error: 'Error adding movie to watchlist' });
-    }
-})
+//         // Redirect to the view watchlist page after adding the movie
+//         res.redirect(`/watchlists/${id}`)
+//     } catch (error) {
+//         console.error(error)
+//         res.render('watchlists/show', { watchlist: null, error: 'Error adding movie to watchlist' })
+//     }
+// })
 
 // POST -> /watchlists -> create a new watchlist
 router.post('/', async (req, res) => {
     const { name } = req.body; // Change 'title' to 'name' if that's the field name
-    const username = req.session.username;
-    const userId = req.session.userId;
+    const username = req.session.username
+    const userId = req.session.userId
     try {
         const newWatchlist = await Watchlist.create({ title: name, owner: userId }); // Ensure the field name matches your model
         const watchlists = await Watchlist.find(); // Fetch all watchlists after creating a new one
