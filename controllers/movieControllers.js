@@ -151,30 +151,31 @@ router.get('/search', async (req, res) => {
 
 // POST -> /movies/add-to-watchlist/:movieId -> add a movie to a watchlist
 router.post('/add-to-watchlist/:movieId', async (req, res) => {
-    const { movieId } = req.params;
-    const { watchlistId } = req.body;
+    const { movieId } = req.params
+    const { watchlistId } = req.body
     const { signedIn } = req.session
 
     try {
         const watchlist = await Watchlist.findById(watchlistId);
         if (!watchlist) {
-            return res.render('error', { error: 'Watchlist not found' });
+            return res.render('error', { error: 'Watchlist not found' })
         }
 
-        const existingMovie = watchlist.movies.find(movie => movie._id === movieId);
+        const existingMovie = watchlist.movies.find(movie => movie._id === movieId)
         if (existingMovie) {
-            return res.render('error', { error: 'Movie already exists in the watchlist' });
+            return res.redirect(`/watchlists/${watchlistId}`)
         }
-        const movie = await Movie.create({ movieId: movieId, title: req.body.title })
-        watchlist.movies.push(movie);
-        await watchlist.save();
 
-        res.redirect(`/movies/${movieId}`);
+        const movie = await Movie.create({ movieId: movieId, title: req.body.title })
+        watchlist.movies.push({ movieId: movieId, title: req.body.title })
+        await watchlist.save()
+
+        res.redirect(`/watchlists/${watchlistId}`)
     } catch (error) {
-        console.error('Error adding movie to watchlist:', error);
-        res.render('error', { error: 'Error adding movie to watchlist' });
+        console.error('Error adding movie to watchlist:', error)
+        res.render('error', { error: 'Error adding movie to watchlist' })
     }
-});
+})
 
 // GET -> /movies/:id -> get details for a specific movie
 router.get('/:id', async (req, res) => {
@@ -188,10 +189,13 @@ router.get('/:id', async (req, res) => {
 
         const apiKey = process.env.API_KEY;
         const movieDetailsUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`;
-        const response = await axios.get(movieDetailsUrl);
-        const movieDetails = response.data;
+        const movieImagesUrl = `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=${apiKey}`;
+        
+        const detailsResponse = await axios.get(movieDetailsUrl)
+        const movieDetails = detailsResponse.data
 
-        const DEFAULT_POSTER_URL = '/assets/no_poster_image.png';
+        const imagesResponse = await axios.get(movieImagesUrl)
+        const movieImages = imagesResponse.data.backdrops
 
         const movie = {
             id: movieDetails.id,
@@ -200,18 +204,19 @@ router.get('/:id', async (req, res) => {
             releaseYear: movieDetails.release_date ? movieDetails.release_date.slice(0, 4) : 'N/A',
             genres: movieDetails.genres.map(genre => genre.name).join(', '),
             overview: movieDetails.overview || 'No overview available',
-        };
+            images: movieImages.map(image => `${IMAGE_API_BASE_URL}/w500/${image.file_path}`),
+        }
 
-        const userId = req.session.userId;
-        const watchlists = await Watchlist.find({ owner: userId });
+        const userId = req.session.userId
+        const watchlists = await Watchlist.find({ owner: userId })
 
 
-        res.render('movies/show', { movie, username: req.session.username, signedIn: req.session.signedIn, userId, watchlists });
+        res.render('movies/show', { movie, username: req.session.username, signedIn: req.session.signedIn, userId, watchlists })
     } catch (error) {
-        console.error('Error fetching movie details:', error);
-        res.render('error', { error: 'Error fetching movie details', signedIn: req.session.signedIn, username: req.session.username });
+        console.error('Error fetching movie details or images: ', error);
+        res.render('error', { error: 'Error fetching movie details or images', signedIn: req.session.signedIn, username: req.session.username })
     }
-});
+})
 
 
 //+//+//+//+//+//+//+//+//+//+//+//

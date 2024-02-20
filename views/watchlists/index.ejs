@@ -1,15 +1,26 @@
 <%- include('../partials/header') %>
 
-    <h1>My Watchlists</h1>
-    
+    <style>
+        .transparent-card {
+            background-color: rgba(255, 255, 255, 0)
+        }
+    </style>
+
+    <h1>Watchlists</h1>
+
     <!-- Watchlists -->
-    <div class="container center">
-        <div class="container row text-left">
+    <div class="container">
+        <div class="row justify-content-center text-center">
             <% watchlists.forEach(function(w) {%>
-                <div class="card mt-2 me-2 listCard">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= w.title %></h5>
-                        <a href="/watchlists/<%= w.id %>" class="card-link">View List</a>
+                <!-- Use col-12 to ensure each card takes full width -->
+                <div class="col-12 mb-3 d-flex">
+                    <div class="card mt-2 listCard w-100 transparent-card">
+                        <div class="card-body">
+                            <!-- Title as link, removed "View List" link -->
+                            <a href="/watchlists/<%= w.id %>" class="card-link">
+                                <h5 class="card-title"><%= w.title %></h5>
+                            </a>
+                        </div>
                     </div>
                 </div>
             <% }) %>
@@ -17,12 +28,13 @@
     </div>
 
     <!-- Add New Watchlist Form -->
-    <form method="POST" action="/watchlists">
-        <div class="mb-3 m-4">
-            <label for="name" class="form-label lightOdark">Watchlist Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
+    <form method="POST" action="/watchlists" class="mt-4 mb-5 mx-5">
+        <div class="d-flex align-items-center g-2">
+            <div class="flex-grow-1 me-2">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Watchlist Name" required>
+            </div>
+            <button type="submit" class="btn btn-color">Create Watchlist</button>
         </div>
-        <button type="submit" class="btn btn-primary">Create Watchlist</button>
     </form>
 
 <%- include('../partials/footer') %>
