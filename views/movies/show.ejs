@@ -32,16 +32,16 @@
         <% if (signedIn) { %>
             <!-- Dropdown for watchlist selection -->
             <form action="/movies/add-to-watchlist/<%= movie.id %>" method="post" class="mt-5">
-                <label for="watchlist">Add to Watchlist:</label>
-                <select name="watchlistId" id="watchlist">
+                <select name="watchlistId" id="watchlist" class="form-select">
                     <% watchlists.forEach(function(watchlist) { %>
                         <option value="<%= watchlist._id %>"><%= watchlist.title %></option>
                     <% }) %>
                 </select>
                 <input hidden name="title" value="<%= movie.title %>"></input>
-                <button type="submit">Add to Watchlist</button>
+                <button type="submit" class="btn btn-color">Add to Watchlist</button>
             </form>
         <% } %>
     </section>
 
 <%- include('../partials/footer') %>
+
