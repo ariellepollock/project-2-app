@@ -167,7 +167,7 @@ router.post('/add-to-watchlist/:movieId', async (req, res) => {
         }
 
         const movie = await Movie.create({ movieId: movieId, title: req.body.title })
-        watchlist.movies.push({ movieId: movieId, title: req.body.title })
+        watchlist.movies.push(movie)
         await watchlist.save()
 
         res.redirect(`/watchlists/${watchlistId}`)
