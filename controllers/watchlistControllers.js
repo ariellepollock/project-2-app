@@ -105,17 +105,24 @@ router.get('/:id', async (req, res) => {
 
 // POST -> /watchlists -> create a new watchlist
 router.post('/', async (req, res) => {
-    const { name } = req.body; // Change 'title' to 'name' if that's the field name
-    const username = req.session.username
-    const userId = req.session.userId
+    const { name } = req.body; // Assuming 'name' is the correct field from your form
+    const userId = req.session.userId;
+    
+    if (!userId) {
+        // Redirect to the sign-in page if the user is not signed in
+        return res.redirect('/signin'); // Ensure this is the correct route for your sign-in page
+    }
+    
     try {
-        const newWatchlist = await Watchlist.create({ title: name, owner: userId }); // Ensure the field name matches your model
-        const watchlists = await Watchlist.find(); // Fetch all watchlists after creating a new one
-        const signedIn = req.session.signedIn;
-        res.render('watchlists/index', { watchlists, signedIn, username }); // Pass watchlists data to index view
+        // Create the new watchlist with the provided name and the current user's ID as the owner
+        await Watchlist.create({ title: name, owner: userId });
+
+        // Redirect to the user's own watchlists page after successful creation
+        res.redirect('/watchlists/mine');
     } catch (error) {
-        console.error(error);
-        res.render('watchlists/new', { error: 'Error creating watchlist' });
+        console.error('Error creating watchlist:', error);
+        // Render the watchlist creation page again with an error message if there's an error
+        res.render('watchlists/new', { error: 'Error creating watchlist', signedIn: true, username: req.session.username });
     }
 })
 
