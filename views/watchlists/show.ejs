@@ -3,6 +3,7 @@
     <% if (watchlist) { %>
         <h1><%= watchlist.title %></h1>
 
+        <!-- List movies in the watchlist -->
         <% if (watchlist.movies && watchlist.movies.length > 0) { %>
             <ul class="wList">
                 <% watchlist.movies.forEach(movie => { %>
@@ -12,16 +13,18 @@
                 <% }) %>
             </ul>
         <% } else { %>
-            <p>Gotta add some movies my friend!</p>
+            <p class="addMovies mb-4">Start adding movies.</p>
         <% } %>
 
         <% if (signedIn && username && userId && watchlist.owner.equals(userId)) { %>
             <!-- Update Form -->
-            <form method="POST" action="/watchlists/update/<%= watchlist._id %>">
-                <div class="mb-3">
-                    <input type="text" class="form-control wUpdate" id="newTitle" name="title" placeholder="New Watchlist Name" required>
+            <form method="POST" action="/watchlists/update/<%= watchlist._id %>" class="mx-5">
+                <div class="d-flex align-items-center g-2">
+                    <div class="flex-grow-1 me-2">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="New Watchlist Name" required>
+                    </div>
+                    <button type="submit" class="btn btn-color">Update Name</button>
                 </div>
-                <button type="submit" class="btn btn-primary wUpdateB">Update Name</button>
             </form>
             
             <!-- Delete Button -->
