@@ -5,34 +5,33 @@
 
         <!-- List movies in the watchlist -->
         <% if (watchlist.movies && watchlist.movies.length > 0) { %>
-            <% watchlist.movies.forEach(movie => { %>
-                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                    
-                    <div class="btn-group" role="group">
-                        <select type="select" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <option>⚬</option>
-                            <option>👀</option>
-                            <option>❤️</option>
-                            <option>👍</option>
-                            <option>👎</option>
-                        </select>
-                    </div>
-
-                    <a href="/movies/<%= movie.movieId %>" class="btn btn-outline-primary">
-                        <%= movie.title %>
-                    </a>
-
-                    <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btncheck6">❌</label>
-
-                </div><br><br>
-            <% }) %>
+            <div class="container space">
+                <% watchlist.movies.forEach(movie => { %>
+                        <div class="btn-group" role="group" aria-label="Basic checkbox button group">
+                            <div class="btn-group" role="group">
+                                <select type="select" class="btn mList" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <option>⚬</option>
+                                    <option>👀</option>
+                                    <option>❤️</option>
+                                    <option>👍</option>
+                                    <option>👎</option>
+                                </select>
+                            </div>
+                            <input type="checkbox" class="btn-check" id="btncheck6" autocomplete="off">
+                            <label class="btn btn-outline-primary d-flex align-items-center mList" for="btncheck6">❌</label>
+                            <a href="/movies/<%= movie.movieId %>" class="btn btn-outline-primary mList">
+                                <%= movie.title %>
+                            </a>
+                        </div>
+                        <br><br>
+                <% }) %>
+            </div>
         <% } else { %>
             <p class="addMovies mb-4">Start adding movies.</p>
         <% } %>
 
         <% if (signedIn && username && userId && watchlist.owner.equals(userId)) { %>
-            <div class="d-flex justify-content-center align-items-center mb-3 mt-3">
+            <div class="d-flex justify-content-center align-items-center mb-5 mt-3 space">
                 <!-- Update Form -->
                 <form method="POST" action="/watchlists/update/<%= watchlist._id %>" class="d-flex">
                     <input type="text" class="form-control" name="name" placeholder="Watchlist Name" required>

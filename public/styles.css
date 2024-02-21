@@ -55,6 +55,13 @@ h1 {
     margin-bottom: auto;
 }
 
+.mList {
+    text-align: left;
+    color: rgb(0, 195, 255);
+    border: none;
+    padding-left: 1rem;
+}
+
 .padleft {
     padding: 0 15vw;
 }
@@ -67,13 +74,8 @@ a {
     text-decoration: none;
 }
 
-.movie-checkbox:checked {
-    color: rgb(0, 195, 255); /* Change this to your preferred color */
-}
-
-.wDelete {
-    display: block;
-    margin: 5vh auto;
+.space {
+    padding: 0 18vw;
 }
 
 .addMovies {
