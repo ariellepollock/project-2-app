@@ -33,6 +33,14 @@ h1 {
     margin-bottom: 5vh;
 }
 
+.LHeader {
+    font-size: 5vmin;
+    text-align: center;
+    color: #fff;
+    padding-top: 15vmin;
+    padding-bottom: 5vmin;
+}
+
 .homeH1 {
     margin-top: 45vh;
     transform: translateY(-50%);
@@ -43,6 +51,16 @@ h1 {
     text-align: center;
     color: rgb(0, 195, 255);
     list-style: none;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+.watchlist-checkbox:checked {
+    color: rgb(0, 195, 255); /* Change this to your preferred color */
 }
 
 .wDelete {
