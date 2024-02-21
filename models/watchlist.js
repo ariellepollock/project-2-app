@@ -28,6 +28,7 @@ const watchlistSchema = new Schema ({
 //+//+//+//+//+//+//+//+//+//+//+//+//
 const Watchlist = model('Watchlist', watchlistSchema)
 const Movie = model('Movie', movieSchema)
+
 //+//+//+//+//+//+//+//+//+//+//+//+//
 //+//  Export watchlist model    //+//
 //+//+//+//+//+//+//+//+//+//+//+//+//

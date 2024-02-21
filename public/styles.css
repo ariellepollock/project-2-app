@@ -54,6 +54,14 @@ h5 {
     padding-left: 1rem;
 }
 
+.xremove {
+    color: rgb(87, 67, 67);
+}
+
+.xremove:hover {
+    color: rgb(193, 0, 0);
+}
+
 .padleft {
     padding: 0 15vw;
 }

@@ -19,6 +19,9 @@
         .space {
             padding: 0 1rem;
         }
+        .deleteBtn {
+            padding-top: 1rem;
+        }
     }
 </style>
 
@@ -30,19 +33,22 @@
             <% watchlist.movies.forEach(movie => { %>
                 <div class="btn-group" role="group" aria-label="Basic checkbox button group">
                     <div class="btn-group" role="group">
-                        <select type="select" class="btn mList" data-bs-toggle="dropdown" aria-expanded="false">
-                            <option>⚪</option>
-                            <option>🟠</option>
-                            <option>🟣</option>
-                            <option>👀</option>
-                            <option>❤️</option>
-                            <option>👍</option>
-                            <option>👎</option>
+                        <select class="btn mList" name="status_<%= movie._id %>" onchange="updateMovieStatus('<%= watchlist._id %>', '<%= movie._id %>', this.value)">
+                            <option value="option1" <%= movie.status === 'option1' ? 'selected' : '' %>>⚪</option>
+                            <option value="option2" <%= movie.status === 'option2' ? 'selected' : '' %>>🟠</option>
+                            <option value="option3" <%= movie.status === 'option3' ? 'selected' : '' %>>🟣</option>
+                            <option value="option4" <%= movie.status === 'option4' ? 'selected' : '' %>>👀</option>
+                            <option value="option5" <%= movie.status === 'option5' ? 'selected' : '' %>>❤️</option>
+                            <option value="option6" <%= movie.status === 'option6' ? 'selected' : '' %>>👍</option>
+                            <option value="option7" <%= movie.status === 'option7' ? 'selected' : '' %>>👎</option>
                         </select>
                     </div>
-                    <input type="checkbox" class="btn-check" id="btncheck<%= movie._id %>" autocomplete="off">
-                    <label class="btn btn-outline-primary d-flex align-items-center mList" for="btncheck<%= movie._id %>">❌</label>
-                    <a href="/movies/<%= movie.movieId %>" class="btn btn-outline-primary mList">
+                    <!-- <input type="checkbox" class="btn-check" id="btncheck<%= movie._id %>" autocomplete="off">
+                    <label class="btn btn-outline-primary d-flex align-items-center mList" for="btncheck<%= movie._id %>">❌</label> -->
+                    <form action="/watchlists/<%= watchlist._id %>/remove-movie/<%= movie._id %>" method="post">
+                        <button type="submit" class="btn mList xremove"><strong>X</strong></button>
+                    </form>                    
+                    <a href="/movies/<%= movie.movieId %>" class="btn mList">
                         <%= movie.title %>
                     </a>
                 </div>
@@ -59,13 +65,36 @@
                 <input type="text" class="form-control me-2" name="name" placeholder="Watchlist Name" required>
                 <button type="submit" class="btn btn-outline-warning">Update</button>
             </form>
-            <form method="POST" action="/watchlists/delete/<%= watchlist._id %>">
-                <button type="submit" class="btn btn-outline-danger ms-sm-2 mt-2">Delete Watchlist</button>
+            <form method="POST" action="/watchlists/delete/<%= watchlist._id %>" class="deleteBtn">
+                <button type="submit" class="btn btn-outline-danger ms-sm-2">Delete Watchlist</button>
             </form>
         </div>
     <% } %>
 <% } else { %>
     <p class="text-center">Watchlist not found, so sorry.</p>
 <% } %>
+
+<script>
+    function updateMovieStatus(watchlistId, movieId, status) {
+        // Example AJAX call using Fetch API
+        fetch(`/watchlists/${watchlistId}/update-movie-status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Additional headers like authentication tokens if needed
+            },
+            body: JSON.stringify({ movieId, status })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Status updated successfully');
+            } else {
+                console.error('Failed to update status');
+            }
+        })
+        .catch(error => console.error('Error updating movie status:', error));
+    }
+</script>
+
 
 <%- include('../partials/footer') %>

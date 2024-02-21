@@ -155,6 +155,34 @@ router.post('/update/:id', async (req, res) => {
     }
 })
 
+// DELETE -> /watchlists/:watchlistId/remove-movie/:movieId
+router.post('/:watchlistId/remove-movie/:movieId', async (req, res) => {
+    const { watchlistId, movieId } = req.params;
+    const userId = req.session.userId;
+
+    try {
+        // Ensure only the watchlist owner can remove a movie
+        const watchlist = await Watchlist.findById(watchlistId);
+        if (!watchlist) {
+            return res.status(404).send('Watchlist not found');
+        }
+
+        if (watchlist.owner.toString() !== userId.toString()) {
+            return res.status(403).send('You are not authorized to modify this watchlist');
+        }
+
+        // Remove the movie from the watchlist
+        watchlist.movies = watchlist.movies.filter(movie => movie._id.toString() !== movieId);
+        await watchlist.save();
+
+        res.redirect(`/watchlists/${watchlistId}`);
+    } catch (error) {
+        console.error('Error removing movie from watchlist:', error);
+        res.status(500).send('An error occurred while removing the movie from the watchlist');
+    }
+});
+
+
 // DELETE -> /watchlists/delete/:id
 // Remove watchlist from a user's watchlists, and is only available to authorized user
 router.post('/delete/:id', (req, res) => {
