@@ -55,6 +55,14 @@ h1 {
     margin-bottom: auto;
 }
 
+.padleft {
+    padding: 0 15vw;
+}
+
+.leftalign {
+    text-align: left;
+}
+
 a {
     text-decoration: none;
 }
