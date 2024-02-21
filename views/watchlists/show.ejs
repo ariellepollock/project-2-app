@@ -32,20 +32,18 @@
         <% } %>
 
         <% if (signedIn && username && userId && watchlist.owner.equals(userId)) { %>
-            <!-- Update Form -->
-            <form method="POST" action="/watchlists/update/<%= watchlist._id %>" class="mx-5">
-                <div class="d-flex align-items-center g-2">
-                    <div class="flex-grow-1 me-2">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="New Watchlist Name" required>
-                    </div>
-                    <button type="submit" class="btn btn-color">Update Name</button>
-                </div>
-            </form>
-            
-            <!-- Delete Button -->
-            <form method="POST" action="/watchlists/delete/<%= watchlist._id %>">
-                <button type="submit" class="btn btn-danger wDelete">Delete Watchlist</button>
-            </form>
+            <div class="d-flex justify-content-center align-items-center mb-3 mt-3">
+                <!-- Update Form -->
+                <form method="POST" action="/watchlists/update/<%= watchlist._id %>" class="d-flex">
+                    <input type="text" class="form-control" name="name" placeholder="Watchlist Name" required>
+                    <button type="submit" class="btn btn-outline-warning me-3 ms-1">Update</button>
+                </form>
+
+                <!-- Delete Button -->
+                <form method="POST" action="/watchlists/delete/<%= watchlist._id %>">
+                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                </form>
+            </div>
         <% } %>
 
     <% } else { %>

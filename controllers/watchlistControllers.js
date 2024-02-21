@@ -127,48 +127,32 @@ router.post('/', async (req, res) => {
 })
 
 // UPDATE -> /watchlist/update/:id
-router.post('/update/:id', (req, res) => {
-    const { username, loggedIn, userId } = req.session
+router.post('/update/:id', async (req, res) => {
+    const { userId } = req.session;
+    const watchlistId = req.params.id;
+    const { name } = req.body;
 
-    // target the specific watchlist
-    const watchlistId = req.params.id
-    const theUpdatedList = req.body
+    if (!userId) {
+        return res.redirect('/signin');
+    }
 
-    // sometimes mean hackers try to steal stuff
-    // remove the ownership from req.body(even if it isn't sent)
-    // then reassign using the session info
-    delete theUpdatedList.owner
-    theUpdatedList.owner = userId
+    try {
+        const watchlist = await Watchlist.findById(watchlistId);
+        if (!watchlist) {
+            return res.status(404).send('Watchlist not found');
+        }
 
-    // default value for a checked checkbox is 'on'
-    // this line of code converts that two times
-    // which results in a boolean value
+        if (watchlist.owner.toString() !== userId) {
+            return res.status(403).send('Not authorized to update this watchlist');
+        }
 
-    // theUpdatedList.title = !!theUpdatedList.title
-
-    console.log('this is req.body', theUpdatedList)
-    // find the place
-    Watchlist.findById(watchlistId)
-        // check for authorization(aka ownership)
-        // if they are the owner, allow update and refresh the page
-        .then(foundList => {
-            // determine if loggedIn user is authorized to update this(aka, the owner)
-            if (foundList.owner == userId) {
-                // here is where we update
-                return foundList.updateOne(theUpdatedList)
-            } else {
-                // if the loggedIn user is NOT the owner
-                res.redirect(`/error?error=You%20Are%20Not%20Allowed%20To%20Update%20This%20List`)
-            }
-        })
-        .then(returnedList => {
-            res.redirect(`/watchlists/${watchlistId}`)
-        })
-        // if not, send error
-        .catch(err => {
-            console.log('error')
-            res.redirect(`/error?error=${err}`)
-        })
+        watchlist.title = name;
+        await watchlist.save();
+        res.redirect(`/watchlists/${watchlistId}`);
+    } catch (error) {
+        console.error('Error updating watchlist:', error);
+        res.redirect(`/error?error=${encodeURIComponent(error.message)}`);
+    }
 })
 
 // DELETE -> /watchlists/delete/:id
