@@ -25,16 +25,8 @@ h5 {
     color: white;
 }
 
-h1 {
-    font-size: 4vw;
-    color: white;
-    text-align: center;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-}
-
 .LHeader {
-    font-size: 5vmin;
+    font-size: 2rem;
     text-align: center;
     color: #fff;
     padding-top: 15vmin;
