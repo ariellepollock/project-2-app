@@ -59,7 +59,7 @@ a {
     text-decoration: none;
 }
 
-.watchlist-checkbox:checked {
+.movie-checkbox:checked {
     color: rgb(0, 195, 255); /* Change this to your preferred color */
 }
 

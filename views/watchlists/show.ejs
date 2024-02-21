@@ -1,17 +1,20 @@
 <%- include('../partials/header') %>
 
     <% if (watchlist) { %>
-        <h1><%= watchlist.title %></h1>
+        <h2 class="LHeader"><%= watchlist.title %></h2>
 
         <!-- List movies in the watchlist -->
         <% if (watchlist.movies && watchlist.movies.length > 0) { %>
             <ul class="wList">
                 <% watchlist.movies.forEach(movie => { %>
-                    <li>
-                        <a href="/movies/<%= movie.movieId %>" class="wList"><%= movie.title %></a>
-                    </li>
+                    <div class="card-body d-flex align-items-center justify-content-center mb-3">
+                        <input type="checkbox" class="me-2 movie-checkbox align-self-center" id="movie-<%= movie.id %>">
+                        <a href="/movies/<%= movie.movieId %>" class="card-list">
+                            <h4 class="card-title wList"><%= movie.title %></h4>
+                        </a>
+                    </div>
                 <% }) %>
-            </ul>
+            </ul><br>
         <% } else { %>
             <p class="addMovies mb-4">Start adding movies.</p>
         <% } %>
