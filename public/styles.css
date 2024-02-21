@@ -11,10 +11,10 @@ body {
 }
 
 .movieCard {
-    width: 20%;
-    background-color: rgb(2, 9, 14);
+    background-color: rgba(2, 9, 14, 0);
     color: white;
     border: none;
+    text-align: center;
 }
 
 h5 {

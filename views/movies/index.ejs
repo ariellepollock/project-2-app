@@ -1,21 +1,22 @@
 <%- include('../partials/header') %>
 
     <!-- Display Movie Posters + Titles -->
-    <div class="container center">
+    <div class="container">
         <% if (error) { %>
             <div class="alert alert-danger" role="alert">
                 <%= error %>
             </div>
         <% } %>
 
-        <div class="container row text-left">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-4">
             <% movies.forEach(function(m) { %>
-                <div class="card mt-2 me-2 movieCard">
-                    <img src="<%= m.posterUrl %>" alt="movie poster" class="card-img-top mt-2">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= m.title %></h5>
-                        <a href="/movies/<%= m.id %>" class="card-link">Movie Details</a>
-                        
+                <div class="col">
+                    <div class="card movieCard">
+                        <img src="<%= m.posterUrl %>" alt="movie poster" class="card-img-top mt-2">
+                        <div class="card-body">
+                            <h4 class="card-title"><%= m.title %></h5>
+                            <a href="/movies/<%= m.id %>" class="card-link">Movie Details</a>
+                        </div>
                     </div>
                 </div>
             <% }) %>
