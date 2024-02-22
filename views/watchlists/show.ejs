@@ -1,6 +1,12 @@
 <%- include('../partials/header') %>
 
 <style>
+    .movie-item {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin: 0 6vmin; /* Adjust the gap between items */
+    }
     /* Custom styles for mobile responsiveness */
     @media (max-width: 768px) {
         .mList {
@@ -8,7 +14,7 @@
         }
         .btn-group, .btn {
             font-size: 1rem; /* Adjust button font sizes for better readability */
-            padding: 0.25rem 0.5rem; /* Adjust padding for smaller buttons */
+            padding: 0.25rem 0.75rem; /* Adjust padding for smaller buttons */
         }
         .LHeader {
             font-size: 1.5rem; /* Adjust heading font size for mobile */
@@ -31,22 +37,20 @@
     <% if (watchlist.movies && watchlist.movies.length > 0) { %>
         <div class="container space">
             <% watchlist.movies.forEach(movie => { %>
-                <div class="btn-group" role="group" aria-label="Basic checkbox button group">
-                    <div class="btn-group" role="group">
-                        <select class="btn mList" name="status_<%= movie._id %>" onchange="updateMovieStatus('<%= watchlist._id %>', '<%= movie._id %>', this.value)">
-                            <option value="option1" <%= movie.status === 'option1' ? 'selected' : '' %>>⚪</option>
-                            <option value="option2" <%= movie.status === 'option2' ? 'selected' : '' %>>🟠</option>
-                            <option value="option3" <%= movie.status === 'option3' ? 'selected' : '' %>>🟣</option>
-                            <option value="option4" <%= movie.status === 'option4' ? 'selected' : '' %>>👀</option>
-                            <option value="option5" <%= movie.status === 'option5' ? 'selected' : '' %>>❤️</option>
-                            <option value="option6" <%= movie.status === 'option6' ? 'selected' : '' %>>👍</option>
-                            <option value="option7" <%= movie.status === 'option7' ? 'selected' : '' %>>👎</option>
-                        </select>
-                    </div>
+                <div class="movie-item">
+                    <select class="btn mList" name="status_<%= movie._id %>" onchange="updateMovieStatus('<%= watchlist._id %>', '<%= movie._id %>', this.value)">
+                        <option value="option1" <%= movie.status === 'option1' ? 'selected' : '' %>>⚪</option>
+                        <option value="option2" <%= movie.status === 'option2' ? 'selected' : '' %>>🟠</option>
+                        <option value="option3" <%= movie.status === 'option3' ? 'selected' : '' %>>🟣</option>
+                        <option value="option4" <%= movie.status === 'option4' ? 'selected' : '' %>>👀</option>
+                        <option value="option5" <%= movie.status === 'option5' ? 'selected' : '' %>>❤️</option>
+                        <option value="option6" <%= movie.status === 'option6' ? 'selected' : '' %>>👍</option>
+                        <option value="option7" <%= movie.status === 'option7' ? 'selected' : '' %>>👎</option>
+                    </select>
                     <!-- <input type="checkbox" class="btn-check" id="btncheck<%= movie._id %>" autocomplete="off">
                     <label class="btn btn-outline-primary d-flex align-items-center mList" for="btncheck<%= movie._id %>">❌</label> -->
-                    <form action="/watchlists/<%= watchlist._id %>/remove-movie/<%= movie._id %>" method="post">
-                        <button type="submit" class="btn mList xremove"><strong>X</strong></button>
+                    <form action="/watchlists/<%= watchlist._id %>/remove-movie/<%= movie._id %>" method="post" class="m-0">
+                        <button type="submit" class="btn mList xremove">❌</button>
                     </form>                    
                     <a href="/movies/<%= movie.movieId %>" class="btn mList">
                         <%= movie.title %>
@@ -63,7 +67,7 @@
         <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center mb-5 mt-3 space">
             <form method="POST" action="/watchlists/update/<%= watchlist._id %>" class="d-flex mb-2 mb-sm-0">
                 <input type="text" class="form-control me-2" name="name" placeholder="Watchlist Name" required>
-                <button type="submit" class="btn btn-outline-warning">Update</button>
+                <button type="submit" class="btn btn-outline-warning btnStyle">Update</button>
             </form>
             <form method="POST" action="/watchlists/delete/<%= watchlist._id %>" class="deleteBtn">
                 <button type="submit" class="btn btn-outline-danger ms-sm-2">Delete Watchlist</button>

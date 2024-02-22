@@ -12,6 +12,11 @@ const { Schema, model } = mongoose
 const movieSchema = new Schema({
     title: String,
     movieId: Number,
+    status: {
+        type: String,
+        enum: ['option1', 'option2', 'option3', 'option4', 'option5', 'option6', 'option7'],
+        default: 'option1'
+    }
 })
 
 const watchlistSchema = new Schema ({
