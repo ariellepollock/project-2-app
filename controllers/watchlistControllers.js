@@ -182,6 +182,29 @@ router.post('/:watchlistId/remove-movie/:movieId', async (req, res) => {
     }
 });
 
+// enum value
+router.post('/:watchlistId/update-movie-status', async (req, res) => {
+    const { watchlistId } = req.params;
+    const { movieId, status } = req.body; // Make sure these names match what you're sending in the fetch request
+
+    try {
+        // Find the watchlist document
+        const watchlist = await Watchlist.findById(watchlistId);
+
+        // Update the status of the specific movie in the watchlist
+        const movieIndex = watchlist.movies.findIndex(movie => movie._id.toString() === movieId);
+        if (movieIndex !== -1) {
+            watchlist.movies[movieIndex].status = status; // Update the status
+            await watchlist.save(); // Save the updated watchlist
+            res.status(200).send('Movie status updated successfully');
+        } else {
+            res.status(404).send('Movie not found in watchlist');
+        }
+    } catch (error) {
+        console.error('Error updating movie status:', error);
+        res.status(500).send('Failed to update movie status');
+    }
+});
 
 // DELETE -> /watchlists/delete/:id
 // Remove watchlist from a user's watchlists, and is only available to authorized user
