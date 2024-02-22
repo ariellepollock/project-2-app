@@ -21,10 +21,6 @@ h5 {
     font-size: small;
 }
 
-.lightOdark {
-    color: white;
-}
-
 .LHeader {
     font-size: 2rem;
     text-align: center;
@@ -78,6 +74,7 @@ h5 {
 
 a {
     text-decoration: none;
+    color: rgb(0, 195, 255);
 }
 
 .space {
