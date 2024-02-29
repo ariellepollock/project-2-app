@@ -1,7 +1,26 @@
 <%- include('./partials/header') %>
 
+    <!-- Display Movie Posters + Titles -->
     <div class="container">
-        <h1 class="homeH1">On the List: a place for all the movie watchlists your heart desires</h1>
+        <% if (error) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-4 mt-4">
+            <% movies.forEach(function(m) { %>
+                <div class="col">
+                    <div class="card movieCard">
+                        <img src="<%= m.posterUrl %>" alt="movie poster" class="card-img-top mt-2">
+                        <div class="card-body">
+                            <h4 class="card-title"><%= m.title %></h5>
+                            <a href="/movies/<%= m.id %>" class="card-link">Movie Details</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
     </div>
 
 <%- include('./partials/footer') %>

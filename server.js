@@ -5,6 +5,7 @@ const express = require('express')
 require('dotenv').config()
 const path = require('path')
 const middleware = require('./utils/middleware')
+const axios = require('axios')
 
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Import Routers         //+//
@@ -30,9 +31,39 @@ middleware(app)
 //+//+//+//+//+//+//+//+//+//+//+//
 //+//  Routes                 //+//
 //+//+//+//+//+//+//+//+//+//+//+//
-app.get('/', (req, res) => {
-    const { username, signedIn, userId } = req.session
-    res.render('home.ejs', { username, signedIn, userId })
+app.get('/', async (req, res) => {
+    try {
+        const { username, signedIn, userId } = req.session;
+        const apiKey = process.env.API_KEY;
+        const apiUrl = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=en-US&page=1`;
+
+        const response = await axios.get(apiUrl);
+        const movies = response.data.results;
+
+        const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
+        const moviesWithImages = movies.map(movie => ({
+            ...movie,
+            posterUrl: movie.poster_path ? `${imageBaseUrl}/${movie.poster_path}` : '/path/to/default/image.jpg',
+        }));
+
+        res.render('home.ejs', {
+            username,
+            signedIn,
+            userId,
+            movies: moviesWithImages,
+            error: null, // Include error variable, set to null because there's no error
+        });
+    } catch (error) {
+        console.error('Error fetching movies for the home page:', error);
+        // Now also include the error variable here, with an actual error message
+        res.render('home.ejs', {
+            username,
+            signedIn,
+            userId,
+            movies: [],
+            error: 'Failed to load movies', // Pass the error message to the view
+        });
+    }
 })
 
 app.use('/users', UserRouter)

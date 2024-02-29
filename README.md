@@ -1,7 +1,7 @@
 # Put It On The List
 
 ## Overview
-This app will help you maintain a collection of movie watchlists. Perhaps you like to create lists of movies for specific occassions/holidays, or maybe you just need an easy place to keep track of movies you MUST see and don't want to forget about. Sometimes you just like making lists. Oh and also, keep track of movies you loved by hearting them.
+On the List is a dynamic movie discovery app that leverages the TMDB API to offer users a comprehensive platform for browsing popular movies, conducting searches, and crafting personalized watchlists with full CRUD capabilities. Whether you're looking to stay on top of the latest releases, organize movies by genre, mood, or occasion, or simply manage and share your cinematic discoveries, On the List provides an intuitive and engaging experience for movie enthusiasts of all tastes. Explore, organize, and plan your movie-watching journey with ease, all in one place.
 
 
 
@@ -16,39 +16,33 @@ As a user, I want the ability to...
   - sign in.  
   - sign out.
   - read details of individual movies.
-      - poster
+      - poster image
+      - banner images
       - title
-      - director
       - release year
       - genre
-      - cast
-      - synopsis
+      - short synopsis
   - scroll through movies
-  - search with select keywords for movies
+  - search for movies
   - add movie to watchlist
-  - create new movie
-  - add new movie to watchlist
   - delete movie from watchlist
-  - create my watchlists
-  - update my watchlists
-  - view all of my watchlists in a list
+  - create watchlists
+  - update watchlists
+  - view all of watchlists
   - delete a watchlist
-  - favorite a movie
-  - view list of favorite movies
+  - mark with an emoji if viewed, loved, liked, disliked, color tags
 
 
 
 ## Wireframes
-Link to FigJam board: https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wireframe-Watchlist-App?type=whiteboard&node-id=0%3A1&t=PUJGbaAAWorwehJv-1
 
-<img width="951" alt="Screen Shot 2023-12-21 at 10 16 39 AM" src="https://github.com/ariellepollock/project-2-app/assets/149843908/8fb58a40-a91b-49a1-b69b-2e3e9414818b">
 
 
 
 ## Technologies Used
 - MongoDB
-- Node.js
 - Express
+- Node.js
 - JavaScript
 - EJS
 - CSS3
@@ -58,16 +52,15 @@ Link to FigJam board: https://www.figma.com/file/PLQbEFSvdji98zg1YDb5XR/Wirefram
 ## Ice Box
 #### PART I
 As a user, I want the ability to...
-  - add a user to watchlist
-  - assign a color to user contributions in watchlist
+  - add additional users to a watchlist
   - view shared watchlists
   - update shared watchlists
   - delete shared watchlists
-  - community share watchlist
+  - community share watchlists
   - view community shared watchlists (collection of lists visible to any user on the app)
   - favorite a watchlist
   - unfavorite a watchlist
-  - view favorited lists
+  - view favorited watchlists
   - view top community wide favorited lists
   - share lists to other users (outside of app)
   - share lists to non-users with link to sign up for app
