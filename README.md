@@ -35,7 +35,12 @@ As a user, I want the ability to...
 
 
 ## Wireframes
-
+![alt text](<Screen Shot 2024-02-28 at 6.33.47 PM.png>)
+![alt text](<Screen Shot 2024-02-28 at 6.34.20 PM.png>)
+![alt text](<Screen Shot 2024-02-28 at 6.38.00 PM.png>)
+![alt text](<Screen Shot 2024-02-28 at 6.39.04 PM.png>)
+![alt text](<Screen Shot 2024-02-28 at 6.39.21 PM.png>)
+![alt text](<Screen Shot 2024-02-28 at 6.39.45 PM.png>)
 
 
 
