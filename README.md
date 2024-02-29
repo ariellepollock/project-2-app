@@ -1,4 +1,4 @@
-# Put It On The List
+# On the List
 
 ## Overview
 On the List is a dynamic movie discovery app that leverages the TMDB API to offer users a comprehensive platform for browsing popular movies, conducting searches, and crafting personalized watchlists with full CRUD capabilities. Whether you're looking to stay on top of the latest releases, organize movies by genre, mood, or occasion, or simply manage and share your cinematic discoveries, On the List provides an intuitive and engaging experience for movie enthusiasts of all tastes. Explore, organize, and plan your movie-watching journey with ease, all in one place.
